@@ -1,6 +1,5 @@
 import XCTest
-
-@testable import Common
+import DLCCommon
 
 final class RowCodingKeyTests: XCTestCase {
     func testInitWithStringValue() {

@@ -17,11 +17,28 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0")
     ],
     targets: [
-        .target(name: "Common", dependencies: [
-            .product(name: "DataLiteCore", package: "data-lite-core")
-        ]),
-        .target(name: "DataLiteCoder"),
-        .testTarget(name: "CommonTests", dependencies: ["Common"]),
-        .testTarget(name: "DataLiteCoderTests", dependencies: ["DataLiteCoder"])
+        .target(
+            name: "DataLiteCoder",
+            dependencies: [
+                .product(name: "DataLiteCore", package: "data-lite-core"),
+                "DLCDecoder"
+            ]
+        ),
+        .target(
+            name: "DLCCommon",
+            dependencies: [
+                .product(name: "DataLiteCore", package: "data-lite-core")
+            ]
+        ),
+        .target(
+            name: "DLCDecoder",
+            dependencies: [
+                .product(name: "DataLiteCore", package: "data-lite-core"),
+                "DLCCommon"
+            ]
+        ),
+        .testTarget(name: "DataLiteCoderTests", dependencies: ["DataLiteCoder"]),
+        .testTarget(name: "DLCCommonTests", dependencies: ["DLCCommon"]),
+        .testTarget(name: "DLCDecoderTests", dependencies: ["DLCDecoder"])
     ]
 )

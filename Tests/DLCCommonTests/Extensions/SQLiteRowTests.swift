@@ -1,7 +1,6 @@
 import XCTest
 import DataLiteCore
-
-@testable import Common
+import DLCCommon
 
 final class SQLiteRowTests: XCTestCase {
     func testContainsKey() {
