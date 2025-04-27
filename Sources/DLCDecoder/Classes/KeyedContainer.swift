@@ -30,62 +30,6 @@ final class KeyedContainer<Decoder: RowDecoder & KeyCheckingDecoder, Key: Coding
         try decoder.decodeNil(for: key)
     }
     
-    func decode(_ type: Bool.Type, forKey key: Key) throws -> Bool {
-        try decoder.decode(type, for: key)
-    }
-    
-    func decode(_ type: String.Type, forKey key: Key) throws -> String {
-        try decoder.decode(type, for: key)
-    }
-    
-    func decode(_ type: Double.Type, forKey key: Key) throws -> Double {
-        try decoder.decode(type, for: key)
-    }
-    
-    func decode(_ type: Float.Type, forKey key: Key) throws -> Float {
-        try decoder.decode(type, for: key)
-    }
-    
-    func decode(_ type: Int.Type, forKey key: Key) throws -> Int {
-        try decoder.decode(type, for: key)
-    }
-    
-    func decode(_ type: Int8.Type, forKey key: Key) throws -> Int8 {
-        try decoder.decode(type, for: key)
-    }
-    
-    func decode(_ type: Int16.Type, forKey key: Key) throws -> Int16 {
-        try decoder.decode(type, for: key)
-    }
-    
-    func decode(_ type: Int32.Type, forKey key: Key) throws -> Int32 {
-        try decoder.decode(type, for: key)
-    }
-    
-    func decode(_ type: Int64.Type, forKey key: Key) throws -> Int64 {
-        try decoder.decode(type, for: key)
-    }
-    
-    func decode(_ type: UInt.Type, forKey key: Key) throws -> UInt {
-        try decoder.decode(type, for: key)
-    }
-    
-    func decode(_ type: UInt8.Type, forKey key: Key) throws -> UInt8 {
-        try decoder.decode(type, for: key)
-    }
-    
-    func decode(_ type: UInt16.Type, forKey key: Key) throws -> UInt16 {
-        try decoder.decode(type, for: key)
-    }
-    
-    func decode(_ type: UInt32.Type, forKey key: Key) throws -> UInt32 {
-        try decoder.decode(type, for: key)
-    }
-    
-    func decode(_ type: UInt64.Type, forKey key: Key) throws -> UInt64 {
-        try decoder.decode(type, for: key)
-    }
-    
     func decode<T: Decodable>(_ type: T.Type, forKey key: Key) throws -> T {
         switch type {
         case is Date.Type:

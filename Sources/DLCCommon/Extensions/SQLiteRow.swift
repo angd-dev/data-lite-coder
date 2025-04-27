@@ -11,10 +11,19 @@ public extension SQLiteRow {
     }
     
     subscript(key: CodingKey) -> Value? {
-        if let index = key.intValue {
-            self[index].value
-        } else {
-            self[key.stringValue]
+        get {
+            if let index = key.intValue {
+                self[index].value
+            } else {
+                self[key.stringValue]
+            }
+        }
+        set {
+            if let index = key.intValue {
+                self[self[index].column] = newValue
+            } else {
+                self[key.stringValue] = newValue
+            }
         }
     }
 }

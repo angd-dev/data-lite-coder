@@ -1,5 +1,6 @@
 import Foundation
 import DataLiteCore
+
 private import DLCDecoder
 
 /// Decoder for converting SQLite data into Swift types conforming to the `Decodable` protocol.
@@ -158,8 +159,8 @@ private import DLCDecoder
 ///
 /// ### Decoding
 ///
-/// - ``decode(_:from:)-(_,SQLiteRow)``
-/// - ``decode(_:from:)-(_,[SQLiteRow])``
+/// - ``decode(_:from:)->T``
+/// - ``decode(_:from:)->[T]``
 ///
 /// ### Customizing Decoding
 ///
@@ -231,20 +232,20 @@ public final class RowDecoder {
         return try T(from: decoder)
     }
     
-    /// Decodes multiple SQLite rows into the specified type.
+    /// Decodes an array of SQLite rows into an array of values of the specified type.
     ///
-    /// This method converts an array of `SQLiteRow` into a Swift type conforming to `Decodable`.
-    /// It is useful for decoding multiple rows from an SQLite query result. If decoding fails,
-    /// this method throws the corresponding error.
+    /// Each `SQLiteRow` in the provided array is decoded into an instance of the
+    /// specified `Decodable` type. This method is useful for decoding the results
+    /// of SQL queries that return multiple rows.
     ///
     /// - Parameters:
-    ///   - type: The type to decode the rows into.
+    ///   - type: The array type containing the element type to decode.
     ///   - rows: The array of SQLite rows to decode.
-    /// - Returns: A decoded instance of the specified type.
+    /// - Returns: An array of decoded instances of the specified type.
     public func decode<T: Decodable>(
-        _ type: T.Type,
+        _ type: [T].Type,
         from rows: [SQLiteRow]
-    ) throws -> T {
+    ) throws -> [T] {
         let dateDecoder = DateDecoder(
             strategy: dateDecodingStrategy
         )
@@ -254,7 +255,7 @@ public final class RowDecoder {
             codingPath: [],
             userInfo: userInfo
         )
-        return try T(from: decoder)
+        return try [T](from: decoder)
     }
 }
 
@@ -264,11 +265,11 @@ public final class RowDecoder {
     // MARK: - TopLevelDecoder
     
     extension RowDecoder: TopLevelDecoder {
-        /// The input data type for the decoder (an array of SQLite rows).
+        /// The input data type expected by this decoder.
         ///
-        /// Conforming to `TopLevelDecoder` allows `RowDecoder` to be used with
-        /// Combine's `decode(_:decoder:)` operator, enabling seamless decoding of
-        /// SQLite query results within reactive pipelines.
-        public typealias Input = [SQLiteRow]
+        /// Defines the type of data this decoder accepts when used as a `TopLevelDecoder`.
+        /// For compatibility with Combine's `decode(_:decoder:)` operator, this is a single
+        /// `SQLiteRow`, even though bulk decoding can be done manually using arrays.
+        public typealias Input = SQLiteRow
     }
 #endif

@@ -83,7 +83,7 @@ public final class SingleRowDecoder: RowDecoder, KeyCheckingDecoder {
         return result
     }
     
-    public func decoder(for key: any CodingKey) throws -> any Swift.Decoder {
+    public func decoder(for key: any CodingKey) throws -> any Decoder {
         guard let data = sqliteData[key] else {
             let info = "No value associated with key \(key)."
             let context = DecodingError.Context(

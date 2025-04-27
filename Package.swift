@@ -21,7 +21,8 @@ let package = Package(
             name: "DataLiteCoder",
             dependencies: [
                 .product(name: "DataLiteCore", package: "data-lite-core"),
-                "DLCDecoder"
+                "DLCDecoder",
+                "DLCEncoder"
             ]
         ),
         .target(
@@ -37,8 +38,16 @@ let package = Package(
                 "DLCCommon"
             ]
         ),
+        .target(
+            name: "DLCEncoder",
+            dependencies: [
+                .product(name: "DataLiteCore", package: "data-lite-core"),
+                "DLCCommon"
+            ]
+        ),
         .testTarget(name: "DataLiteCoderTests", dependencies: ["DataLiteCoder"]),
         .testTarget(name: "DLCCommonTests", dependencies: ["DLCCommon"]),
-        .testTarget(name: "DLCDecoderTests", dependencies: ["DLCDecoder"])
+        .testTarget(name: "DLCDecoderTests", dependencies: ["DLCDecoder"]),
+        .testTarget(name: "DLCEncoderTests", dependencies: ["DLCEncoder"])
     ]
 )

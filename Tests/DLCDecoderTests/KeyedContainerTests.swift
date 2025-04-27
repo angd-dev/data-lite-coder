@@ -14,15 +14,8 @@ final class KeyedContainerTests: XCTestCase {
             allKeys: [CodingKeys.key1]
         )
         
-        XCTAssertTrue(
-            container.contains(.key1),
-            "Expected container to contain 'key1', but it was not found."
-        )
-        
-        XCTAssertFalse(
-            container.contains(.key2),
-            "Expected container to not contain 'key2', but it was found."
-        )
+        XCTAssertTrue(container.contains(.key1))
+        XCTAssertFalse(container.contains(.key2))
     }
     
     func testDecodeNil() {
@@ -36,15 +29,8 @@ final class KeyedContainerTests: XCTestCase {
             allKeys: [CodingKeys.key1, .key2]
         )
         
-        XCTAssertFalse(
-            try container.decodeNil(forKey: .key1),
-            "'key1' contains a non-nil value, but was incorrectly detected as nil."
-        )
-        
-        XCTAssertTrue(
-            try container.decodeNil(forKey: .key2),
-            "'key2' contains a nil value, but was incorrectly detected as non-nil."
-        )
+        XCTAssertFalse(try container.decodeNil(forKey: .key1))
+        XCTAssertTrue(try container.decodeNil(forKey: .key2))
     }
     
     func testDecodeBool() {
@@ -58,15 +44,9 @@ final class KeyedContainerTests: XCTestCase {
             allKeys: [CodingKeys.key1, .key2]
         )
         
-        XCTAssertFalse(
-            try container.decode(Bool.self, forKey: .key1),
-            "Expected decoded Bool to be false."
-        )
-        
-        XCTAssertTrue(
-            try container.decode(Bool.self, forKey: .key2),
-            "Expected decoded Bool to be true."
-        )
+        XCTAssertFalse(try container.decode(Bool.self, forKey: .key1))
+        XCTAssertTrue(try container.decode(Bool.self, forKey: .key2))
+        XCTAssertNil(try container.decodeIfPresent(Bool.self, forKey: .key3))
     }
     
     func testDecodeString() {
@@ -80,10 +60,8 @@ final class KeyedContainerTests: XCTestCase {
             allKeys: [CodingKeys.key1]
         )
         
-        XCTAssertEqual(
-            try container.decode(String.self, forKey: .key1), string,
-            "Decoded String does not match expected value."
-        )
+        XCTAssertEqual(try container.decode(String.self, forKey: .key1), string)
+        XCTAssertNil(try container.decodeIfPresent(String.self, forKey: .key2))
     }
     
     func testDecodeRealNumber() {
@@ -97,15 +75,10 @@ final class KeyedContainerTests: XCTestCase {
             allKeys: [CodingKeys.key1, .key2]
         )
         
-        XCTAssertEqual(
-            try container.decode(Double.self, forKey: .key1), 3.14,
-            "Decoded Double value for 'key1' does not match expected value."
-        )
-        
-        XCTAssertEqual(
-            try container.decode(Float.self, forKey: .key2), 2.55,
-            "Decoded Float value for 'key2' does not match expected value."
-        )
+        XCTAssertEqual(try container.decode(Double.self, forKey: .key1), 3.14)
+        XCTAssertEqual(try container.decode(Float.self, forKey: .key2), 2.55)
+        XCTAssertNil(try container.decodeIfPresent(Double.self, forKey: .key3))
+        XCTAssertNil(try container.decodeIfPresent(Float.self, forKey: .key3))
     }
     
     func testDecodeIntNumber() {
@@ -118,46 +91,17 @@ final class KeyedContainerTests: XCTestCase {
             allKeys: [CodingKeys.key1]
         )
         
-        XCTAssertEqual(
-            try container.decode(Int.self, forKey: .key1), 42,
-            "Decoded Int value for 'key1' does not match expected value."
-        )
-        XCTAssertEqual(
-            try container.decode(Int8.self, forKey: .key1), 42,
-            "Decoded Int8 value for 'key1' does not match expected value."
-        )
-        XCTAssertEqual(
-            try container.decode(Int16.self, forKey: .key1), 42,
-            "Decoded Int16 value for 'key1' does not match expected value."
-        )
-        XCTAssertEqual(
-            try container.decode(Int32.self, forKey: .key1), 42,
-            "Decoded Int32 value for 'key1' does not match expected value."
-        )
-        XCTAssertEqual(
-            try container.decode(Int64.self, forKey: .key1), 42,
-            "Decoded Int64 value for 'key1' does not match expected value."
-        )
-        XCTAssertEqual(
-            try container.decode(UInt.self, forKey: .key1), 42,
-            "Decoded UInt value for 'key1' does not match expected value."
-        )
-        XCTAssertEqual(
-            try container.decode(UInt8.self, forKey: .key1), 42,
-            "Decoded UInt8 value for 'key1' does not match expected value."
-        )
-        XCTAssertEqual(
-            try container.decode(UInt16.self, forKey: .key1), 42,
-            "Decoded UInt16 value for 'key1' does not match expected value."
-        )
-        XCTAssertEqual(
-            try container.decode(UInt32.self, forKey: .key1), 42,
-            "Decoded UInt32 value for 'key1' does not match expected value."
-        )
-        XCTAssertEqual(
-            try container.decode(UInt64.self, forKey: .key1), 42,
-            "Decoded UInt64 value for 'key1' does not match expected value."
-        )
+        XCTAssertEqual(try container.decode(Int.self, forKey: .key1), 42)
+        XCTAssertEqual(try container.decode(Int8.self, forKey: .key1), 42)
+        XCTAssertEqual(try container.decode(Int16.self, forKey: .key1), 42)
+        XCTAssertEqual(try container.decode(Int32.self, forKey: .key1), 42)
+        XCTAssertEqual(try container.decode(Int64.self, forKey: .key1), 42)
+        XCTAssertEqual(try container.decode(UInt.self, forKey: .key1), 42)
+        XCTAssertEqual(try container.decode(UInt8.self, forKey: .key1), 42)
+        XCTAssertEqual(try container.decode(UInt16.self, forKey: .key1), 42)
+        XCTAssertEqual(try container.decode(UInt32.self, forKey: .key1), 42)
+        XCTAssertEqual(try container.decode(UInt64.self, forKey: .key1), 42)
+        XCTAssertNil(try container.decodeIfPresent(Int.self, forKey: .key2))
     }
     
     func testDecodeDate() {
@@ -171,10 +115,8 @@ final class KeyedContainerTests: XCTestCase {
             allKeys: [CodingKeys.key1]
         )
         
-        XCTAssertEqual(
-            try container.decode(Date.self, forKey: .key1), date,
-            "Decoded Date value for 'key1' does not match expected value."
-        )
+        XCTAssertEqual(try container.decode(Date.self, forKey: .key1), date)
+        XCTAssertNil(try container.decodeIfPresent(Date.self, forKey: .key2))
     }
     
     func testDecodeRawRepresentable() {
@@ -188,10 +130,8 @@ final class KeyedContainerTests: XCTestCase {
             allKeys: [CodingKeys.key1]
         )
         
-        XCTAssertEqual(
-            try container.decode(RawRepresentableEnum.self, forKey: .key1), `case`,
-            "Decoded RawRepresentableEnum value for 'key1' does not match expected value."
-        )
+        XCTAssertEqual(try container.decode(RawRepresentableEnum.self, forKey: .key1), `case`)
+        XCTAssertNil(try container.decodeIfPresent(RawRepresentableEnum.self, forKey: .key2))
     }
     
     func testDecodeDecodable() {
@@ -205,10 +145,8 @@ final class KeyedContainerTests: XCTestCase {
             allKeys: [CodingKeys.key1]
         )
         
-        XCTAssertEqual(
-            try container.decode(DecodableEnum.self, forKey: .key1), `case`,
-            "Decoded DecodableEnum value for 'key1' does not match expected case."
-        )
+        XCTAssertEqual(try container.decode(DecodableEnum.self, forKey: .key1), `case`)
+        XCTAssertNil(try container.decodeIfPresent(DecodableEnum.self, forKey: .key2))
     }
     
     func testNestedContainerKeyedBy() {
@@ -420,7 +358,7 @@ private extension KeyedContainerTests {
             type.init(sqliteData[key.stringValue]!)!
         }
         
-        func decoder(for key: any CodingKey) -> any Swift.Decoder {
+        func decoder(for key: any CodingKey) -> any Decoder {
             MockValueDecoder(sqliteData: sqliteData[key.stringValue]!)
         }
         
