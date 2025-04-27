@@ -1,19 +1,19 @@
 import Foundation
 import DataLiteCore
 
-final class MultiRowDecoder: RowDecoder {
+public final class MultiRowDecoder: RowDecoder {
     // MARK: - Properties
     
-    let dateDecoder: any DateDecoder
-    let sqliteData: [SQLiteRow]
-    let codingPath: [any CodingKey]
-    let userInfo: [CodingUserInfoKey: Any]
+    public let dateDecoder: any DateDecoder
+    public let sqliteData: [SQLiteRow]
+    public let codingPath: [any CodingKey]
+    public let userInfo: [CodingUserInfoKey: Any]
     
-    var count: Int? { sqliteData.count }
+    public var count: Int? { sqliteData.count }
     
     // MARK: Inits
     
-    init(
+    public init(
         dateDecoder: any DateDecoder,
         sqliteData: [SQLiteRow],
         codingPath: [any CodingKey],
@@ -27,7 +27,7 @@ final class MultiRowDecoder: RowDecoder {
     
     // MARK: Methods
     
-    func decodeNil(for key: any CodingKey) throws -> Bool {
+    public func decodeNil(for key: any CodingKey) throws -> Bool {
         let info = "Attempted to decode nil, but it's not supported for an array of rows."
         let context = DecodingError.Context(
             codingPath: codingPath + [key],
@@ -36,11 +36,11 @@ final class MultiRowDecoder: RowDecoder {
         throw DecodingError.dataCorrupted(context)
     }
     
-    func decodeDate(for key: any CodingKey) throws -> Date {
+    public func decodeDate(for key: any CodingKey) throws -> Date {
         return try decode(Date.self, for: key)
     }
     
-    func decode<T: SQLiteRawRepresentable>(
+    public func decode<T: SQLiteRawRepresentable>(
         _ type: T.Type,
         for key: any CodingKey
     ) throws -> T {
@@ -52,7 +52,7 @@ final class MultiRowDecoder: RowDecoder {
         throw DecodingError.typeMismatch(type, context)
     }
     
-    func decoder(for key: any CodingKey) throws -> any Swift.Decoder {
+    public func decoder(for key: any CodingKey) throws -> any Swift.Decoder {
         guard let index = key.intValue else {
             let info = "Expected an integer key, but found a non-integer key."
             let context = DecodingError.Context(
@@ -69,7 +69,7 @@ final class MultiRowDecoder: RowDecoder {
         )
     }
     
-    func container<Key: CodingKey>(
+    public func container<Key: CodingKey>(
         keyedBy type: Key.Type
     ) throws -> KeyedDecodingContainer<Key> {
         let info = "Expected a keyed container, but found an array of rows."
@@ -83,14 +83,14 @@ final class MultiRowDecoder: RowDecoder {
         )
     }
     
-    func unkeyedContainer() throws -> any UnkeyedDecodingContainer {
+    public func unkeyedContainer() throws -> any UnkeyedDecodingContainer {
         UnkeyedContainer(
             decoder: self,
             codingPath: codingPath
         )
     }
     
-    func singleValueContainer() throws -> any SingleValueDecodingContainer {
+    public func singleValueContainer() throws -> any SingleValueDecodingContainer {
         let info = "Expected a single value container, but found an array of rows."
         let context = DecodingError.Context(
             codingPath: codingPath,

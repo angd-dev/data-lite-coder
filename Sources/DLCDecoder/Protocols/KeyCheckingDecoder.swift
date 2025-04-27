@@ -1,5 +1,5 @@
 import Foundation
 
-protocol KeyCheckingDecoder: Decoder {
+public protocol KeyCheckingDecoder: Decoder {
     func contains(_ key: CodingKey) -> Bool
 }

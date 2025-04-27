@@ -3,19 +3,19 @@ import DataLiteCore
 
 private import DLCCommon
 
-final class SingleRowDecoder: RowDecoder, KeyCheckingDecoder {
+public final class SingleRowDecoder: RowDecoder, KeyCheckingDecoder {
     // MARK: - Properties
     
-    let dateDecoder: any DateDecoder
-    let sqliteData: SQLiteRow
-    let codingPath: [any CodingKey]
-    let userInfo: [CodingUserInfoKey: Any]
+    public let dateDecoder: any DateDecoder
+    public let sqliteData: SQLiteRow
+    public let codingPath: [any CodingKey]
+    public let userInfo: [CodingUserInfoKey: Any]
     
-    var count: Int? { sqliteData.count }
+    public var count: Int? { sqliteData.count }
     
     // MARK: Inits
     
-    init(
+    public init(
         dateDecoder: any DateDecoder,
         sqliteData: SQLiteRow,
         codingPath: [any CodingKey],
@@ -29,11 +29,11 @@ final class SingleRowDecoder: RowDecoder, KeyCheckingDecoder {
     
     // MARK: - Methods
     
-    func contains(_ key: any CodingKey) -> Bool {
+    public func contains(_ key: any CodingKey) -> Bool {
         sqliteData.contains(key)
     }
     
-    func decodeNil(for key: any CodingKey) throws -> Bool {
+    public func decodeNil(for key: any CodingKey) throws -> Bool {
         guard sqliteData.contains(key) else {
             let info = "No value associated with key \(key)."
             let context = DecodingError.Context(
@@ -45,11 +45,11 @@ final class SingleRowDecoder: RowDecoder, KeyCheckingDecoder {
         return sqliteData[key] == .null
     }
     
-    func decodeDate(for key: any CodingKey) throws -> Date {
+    public func decodeDate(for key: any CodingKey) throws -> Date {
         try dateDecoder.decode(from: self, for: key)
     }
     
-    func decode<T: SQLiteRawRepresentable>(
+    public func decode<T: SQLiteRawRepresentable>(
         _ type: T.Type,
         for key: any CodingKey
     ) throws -> T {
@@ -83,7 +83,7 @@ final class SingleRowDecoder: RowDecoder, KeyCheckingDecoder {
         return result
     }
     
-    func decoder(for key: any CodingKey) throws -> any Swift.Decoder {
+    public func decoder(for key: any CodingKey) throws -> any Swift.Decoder {
         guard let data = sqliteData[key] else {
             let info = "No value associated with key \(key)."
             let context = DecodingError.Context(
@@ -100,7 +100,7 @@ final class SingleRowDecoder: RowDecoder, KeyCheckingDecoder {
         )
     }
     
-    func container<Key: CodingKey>(
+    public func container<Key: CodingKey>(
         keyedBy type: Key.Type
     ) throws -> KeyedDecodingContainer<Key> {
         let allKeys = sqliteData.compactMap { (column, _) in
@@ -114,14 +114,14 @@ final class SingleRowDecoder: RowDecoder, KeyCheckingDecoder {
         return KeyedDecodingContainer(container)
     }
     
-    func unkeyedContainer() throws -> any UnkeyedDecodingContainer {
+    public func unkeyedContainer() throws -> any UnkeyedDecodingContainer {
         UnkeyedContainer(
             decoder: self,
             codingPath: codingPath
         )
     }
     
-    func singleValueContainer() throws -> any SingleValueDecodingContainer {
+    public func singleValueContainer() throws -> any SingleValueDecodingContainer {
         let info = "Expected a single value container, but found a row value."
         let context = DecodingError.Context(
             codingPath: codingPath,
