@@ -38,6 +38,132 @@ final class KeyedContainer<Encoder: RowEncoder, Key: CodingKey>: Container, Keye
         }
     }
     
+    func encodeIfPresent(_ value: Bool?, forKey key: Key) throws {
+        switch value {
+        case .some(let value):
+            try encode(value, forKey: key)
+        case .none:
+            try encodeNil(forKey: key)
+        }
+    }
+    
+    func encodeIfPresent(_ value: String?, forKey key: Key) throws {
+        switch value {
+        case .some(let value):
+            try encode(value, forKey: key)
+        case .none:
+            try encodeNil(forKey: key)
+        }
+    }
+    
+    func encodeIfPresent(_ value: Double?, forKey key: Key) throws {
+        switch value {
+        case .some(let value):
+            try encode(value, forKey: key)
+        case .none:
+            try encodeNil(forKey: key)
+        }
+    }
+    
+    func encodeIfPresent(_ value: Float?, forKey key: Key) throws {
+        switch value {
+        case .some(let value):
+            try encode(value, forKey: key)
+        case .none:
+            try encodeNil(forKey: key)
+        }
+    }
+    
+    func encodeIfPresent(_ value: Int?, forKey key: Key) throws {
+        switch value {
+        case .some(let value):
+            try encode(value, forKey: key)
+        case .none:
+            try encodeNil(forKey: key)
+        }
+    }
+    
+    func encodeIfPresent(_ value: Int8?, forKey key: Key) throws {
+        switch value {
+        case .some(let value):
+            try encode(value, forKey: key)
+        case .none:
+            try encodeNil(forKey: key)
+        }
+    }
+    
+    func encodeIfPresent(_ value: Int16?, forKey key: Key) throws {
+        switch value {
+        case .some(let value):
+            try encode(value, forKey: key)
+        case .none:
+            try encodeNil(forKey: key)
+        }
+    }
+    
+    func encodeIfPresent(_ value: Int32?, forKey key: Key) throws {
+        switch value {
+        case .some(let value):
+            try encode(value, forKey: key)
+        case .none:
+            try encodeNil(forKey: key)
+        }
+    }
+    
+    func encodeIfPresent(_ value: Int64?, forKey key: Key) throws {
+        switch value {
+        case .some(let value):
+            try encode(value, forKey: key)
+        case .none:
+            try encodeNil(forKey: key)
+        }
+    }
+    
+    func encodeIfPresent(_ value: UInt?, forKey key: Key) throws {
+        switch value {
+        case .some(let value):
+            try encode(value, forKey: key)
+        case .none:
+            try encodeNil(forKey: key)
+        }
+    }
+    
+    func encodeIfPresent(_ value: UInt8?, forKey key: Key) throws {
+        switch value {
+        case .some(let value):
+            try encode(value, forKey: key)
+        case .none:
+            try encodeNil(forKey: key)
+        }
+    }
+    
+    func encodeIfPresent(_ value: UInt16?, forKey key: Key) throws {
+        switch value {
+        case .some(let value):
+            try encode(value, forKey: key)
+        case .none:
+            try encodeNil(forKey: key)
+        }
+    }
+    
+    func encodeIfPresent(_ value: UInt32?, forKey key: Key) throws {
+        switch value {
+        case .some(let value):
+            try encode(value, forKey: key)
+        case .none:
+            try encodeNil(forKey: key)
+        }
+    }
+    
+    func encodeIfPresent(_ value: UInt64?, forKey key: Key) throws {
+        switch value {
+        case .some(let value):
+            try encode(value, forKey: key)
+        case .none:
+            try encodeNil(forKey: key)
+        }
+    }
+    
     func encodeIfPresent<T: Encodable>(_ value: T?, forKey key: Key) throws {
         switch value {
         case .some(let value):

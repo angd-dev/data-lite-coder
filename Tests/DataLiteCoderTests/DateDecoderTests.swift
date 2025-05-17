@@ -13,19 +13,13 @@ final class DateDecoderTests: XCTestCase {
             sqliteData: .real(date.timeIntervalSince1970)
         )
         
-        XCTAssertEqual(
-            try dateDecoder.decode(from: singleDecoder), date,
-            ""
-        )
+        XCTAssertEqual(try dateDecoder.decode(from: singleDecoder), date)
         
         var row = SQLiteRow()
         row[CodingKeys.key.stringValue] = .real(date.timeIntervalSince1970)
         let keyedDecoder = KeyedDecoder(sqliteData: row)
         
-        XCTAssertEqual(
-            try dateDecoder.decode(from: keyedDecoder, for: CodingKeys.key), date,
-            ""
-        )
+        XCTAssertEqual(try dateDecoder.decode(from: keyedDecoder, for: CodingKeys.key), date)
     }
     
     func testISO8601() throws {

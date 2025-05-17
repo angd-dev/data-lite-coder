@@ -7,8 +7,10 @@ import DLCCommon
 final class KeyedContainerTests: XCTestCase {
     func testEncodeNil() throws {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: []
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: []
+            )
         )
         
         try container.encodeNil(forKey: .key1)
@@ -19,8 +21,10 @@ final class KeyedContainerTests: XCTestCase {
     
     func testEncodeBool() throws {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: []
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: []
+            )
         )
         
         try container.encodeIfPresent(true, forKey: .key1)
@@ -35,8 +39,10 @@ final class KeyedContainerTests: XCTestCase {
     
     func testEncodeString() throws {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: []
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: []
+            )
         )
         
         try container.encodeIfPresent("test", forKey: .key1)
@@ -49,8 +55,10 @@ final class KeyedContainerTests: XCTestCase {
     
     func testEncodeDouble() throws {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: []
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: []
+            )
         )
         
         try container.encodeIfPresent(Double(3.14), forKey: .key1)
@@ -63,8 +71,10 @@ final class KeyedContainerTests: XCTestCase {
     
     func testEncodeFloat() throws {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: []
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: []
+            )
         )
         
         try container.encodeIfPresent(Float(3.14), forKey: .key1)
@@ -77,8 +87,10 @@ final class KeyedContainerTests: XCTestCase {
     
     func testEncodeInt() throws {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: []
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: []
+            )
         )
         
         try container.encodeIfPresent(Int(42), forKey: .key1)
@@ -91,8 +103,10 @@ final class KeyedContainerTests: XCTestCase {
     
     func testEncodeInt8() throws {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: []
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: []
+            )
         )
         
         try container.encodeIfPresent(Int8(8), forKey: .key1)
@@ -105,8 +119,10 @@ final class KeyedContainerTests: XCTestCase {
     
     func testEncodeInt16() throws {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: []
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: []
+            )
         )
         
         try container.encodeIfPresent(Int16(16), forKey: .key1)
@@ -119,8 +135,10 @@ final class KeyedContainerTests: XCTestCase {
     
     func testEncodeInt32() throws {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: []
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: []
+            )
         )
         
         try container.encodeIfPresent(Int32(32), forKey: .key1)
@@ -133,8 +151,10 @@ final class KeyedContainerTests: XCTestCase {
     
     func testEncodeInt64() throws {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: []
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: []
+            )
         )
         
         try container.encodeIfPresent(Int64(64), forKey: .key1)
@@ -147,8 +167,10 @@ final class KeyedContainerTests: XCTestCase {
     
     func testEncodeUInt() throws {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: []
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: []
+            )
         )
         
         try container.encodeIfPresent(UInt(42), forKey: .key1)
@@ -161,8 +183,10 @@ final class KeyedContainerTests: XCTestCase {
     
     func testEncodeUInt8() throws {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: []
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: []
+            )
         )
         
         try container.encodeIfPresent(UInt8(8), forKey: .key1)
@@ -175,8 +199,10 @@ final class KeyedContainerTests: XCTestCase {
     
     func testEncodeUInt16() throws {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: []
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: []
+            )
         )
         
         try container.encodeIfPresent(UInt16(16), forKey: .key1)
@@ -189,8 +215,10 @@ final class KeyedContainerTests: XCTestCase {
     
     func testEncodeUInt32() throws {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: []
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: []
+            )
         )
         
         try container.encodeIfPresent(UInt32(32), forKey: .key1)
@@ -203,8 +231,10 @@ final class KeyedContainerTests: XCTestCase {
     
     func testEncodeUInt64() throws {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: []
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: []
+            )
         )
         
         try container.encodeIfPresent(UInt64(64), forKey: .key1)
@@ -220,8 +250,10 @@ final class KeyedContainerTests: XCTestCase {
         let dateString = ISO8601DateFormatter().string(from: date)
         
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: []
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: []
+            )
         )
         
         try container.encodeIfPresent(date, forKey: .key1)
@@ -234,8 +266,10 @@ final class KeyedContainerTests: XCTestCase {
     
     func testEncodeRawRepresentable() throws {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: []
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: []
+            )
         )
         
         try container.encodeIfPresent(RawRepresentableModel.test, forKey: .key1)
@@ -248,8 +282,10 @@ final class KeyedContainerTests: XCTestCase {
     
     func testEncodeEncodable() throws {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: []
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: []
+            )
         )
         
         try container.encodeIfPresent(EncodableModel.test, forKey: .key1)
@@ -262,8 +298,10 @@ final class KeyedContainerTests: XCTestCase {
     
     func testNestedKeyedContainer() {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: [CodingKeys.key1]
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: [CodingKeys.key1]
+            )
         )
         let nestedContainer = container.nestedContainer(
             keyedBy: CodingKeys.self, forKey: .key3
@@ -273,8 +311,10 @@ final class KeyedContainerTests: XCTestCase {
     
     func testNestedUnkeyedContainer() {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: [CodingKeys.key1]
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: [CodingKeys.key1]
+            )
         )
         let nestedContainer = container.nestedUnkeyedContainer(forKey: .key3)
         XCTAssertTrue(nestedContainer is FailedEncodingContainer<RowCodingKey>)
@@ -283,8 +323,10 @@ final class KeyedContainerTests: XCTestCase {
     
     func testSuperEncoder() {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: [CodingKeys.key1]
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: [CodingKeys.key1]
+            )
         )
         let superEncoder = container.superEncoder()
         XCTAssertTrue(superEncoder is FailedEncoder)
@@ -293,8 +335,10 @@ final class KeyedContainerTests: XCTestCase {
     
     func testSuperEncoderForKey() {
         let encoder = MockSingleRowEncoder()
-        let container = KeyedContainer<MockSingleRowEncoder, CodingKeys>(
-            encoder: encoder, codingPath: [CodingKeys.key1]
+        var container = KeyedEncodingContainer(
+            KeyedContainer<MockSingleRowEncoder, CodingKeys>(
+                encoder: encoder, codingPath: [CodingKeys.key1]
+            )
         )
         let superEncoder = container.superEncoder(forKey: .key3)
         XCTAssertTrue(superEncoder is FailedEncoder)

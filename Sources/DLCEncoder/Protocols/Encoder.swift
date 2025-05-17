@@ -1,6 +1,6 @@
 import Foundation
 
-protocol Encoder: Swift.Encoder {
+public protocol Encoder: Swift.Encoder {
     associatedtype SQLiteData
     
     var dateEncoder: any DateEncoder { get }

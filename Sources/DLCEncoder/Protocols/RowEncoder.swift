@@ -1,7 +1,7 @@
 import Foundation
 import DataLiteCore
 
-protocol RowEncoder: Encoder {
+public protocol RowEncoder: Encoder {
     var count: Int { get }
     
     func set(_ value: Any, for key: CodingKey) throws

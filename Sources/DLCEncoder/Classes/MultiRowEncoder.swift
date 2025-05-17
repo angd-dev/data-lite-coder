@@ -3,20 +3,20 @@ import DataLiteCore
 
 private import DLCCommon
 
-final class MultiRowEncoder: RowEncoder {
+public final class MultiRowEncoder: RowEncoder {
     // MARK: - Properties
     
-    let dateEncoder: any DateEncoder
-    let codingPath: [any CodingKey]
-    let userInfo: [CodingUserInfoKey : Any]
+    public let dateEncoder: any DateEncoder
+    public let codingPath: [any CodingKey]
+    public let userInfo: [CodingUserInfoKey : Any]
     
-    private(set) var sqliteData = [SQLiteRow]()
+    public private(set) var sqliteData = [SQLiteRow]()
     
-    var count: Int { sqliteData.count }
+    public var count: Int { sqliteData.count }
     
     // MARK: - Inits
     
-    init(
+    public init(
         dateEncoder: any DateEncoder,
         codingPath: [any CodingKey],
         userInfo: [CodingUserInfoKey : Any]
@@ -28,7 +28,7 @@ final class MultiRowEncoder: RowEncoder {
     
     // MARK: - Methods
     
-    func set(_ value: Any, for key: any CodingKey) throws {
+    public func set(_ value: Any, for key: any CodingKey) throws {
         guard let value = value as? SQLiteRow else {
             let info = "Expected value of type \(SQLiteRow.self)"
             let context = EncodingError.Context(
@@ -40,7 +40,7 @@ final class MultiRowEncoder: RowEncoder {
         sqliteData.append(value)
     }
     
-    func encodeNil(for key: any CodingKey) throws {
+    public func encodeNil(for key: any CodingKey) throws {
         let value = Optional<Any>.none as Any
         let info = "Attempted to encode nil, but it's not supported."
         let context = EncodingError.Context(
@@ -50,7 +50,7 @@ final class MultiRowEncoder: RowEncoder {
         throw EncodingError.invalidValue(value, context)
     }
     
-    func encodeDate(_ date: Date, for key: any CodingKey) throws {
+    public func encodeDate(_ date: Date, for key: any CodingKey) throws {
         let info = "Attempted to encode Date, but it's not supported."
         let context = EncodingError.Context(
             codingPath: codingPath + [key],
@@ -59,7 +59,7 @@ final class MultiRowEncoder: RowEncoder {
         throw EncodingError.invalidValue(date, context)
     }
     
-    func encode<T: SQLiteRawBindable>(_ value: T, for key: any CodingKey) throws {
+    public func encode<T: SQLiteRawBindable>(_ value: T, for key: any CodingKey) throws {
         let info = "Attempted to encode \(T.self), but it's not supported."
         let context = EncodingError.Context(
             codingPath: codingPath + [key],
@@ -68,7 +68,7 @@ final class MultiRowEncoder: RowEncoder {
         throw EncodingError.invalidValue(value, context)
     }
     
-    func encoder(for key: any CodingKey) throws -> any Encoder {
+    public func encoder(for key: any CodingKey) throws -> any Encoder {
         SingleRowEncoder(
             dateEncoder: dateEncoder,
             codingPath: codingPath + [key],
@@ -76,7 +76,7 @@ final class MultiRowEncoder: RowEncoder {
         )
     }
     
-    func container<Key: CodingKey>(
+    public func container<Key: CodingKey>(
         keyedBy type: Key.Type
     ) -> KeyedEncodingContainer<Key> {
         let container = FailedEncodingContainer<Key>(
@@ -85,11 +85,11 @@ final class MultiRowEncoder: RowEncoder {
         return KeyedEncodingContainer(container)
     }
     
-    func unkeyedContainer() -> any UnkeyedEncodingContainer {
+    public func unkeyedContainer() -> any UnkeyedEncodingContainer {
         UnkeyedContainer(encoder: self, codingPath: codingPath)
     }
     
-    func singleValueContainer() -> any SingleValueEncodingContainer {
+    public func singleValueContainer() -> any SingleValueEncodingContainer {
         FailedEncodingContainer<RowCodingKey>(codingPath: codingPath)
     }
 }
