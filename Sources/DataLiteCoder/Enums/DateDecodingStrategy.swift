@@ -1,10 +1,11 @@
 import Foundation
 
 extension RowDecoder {
-    /// Strategies for decoding `Date` values from SQLite data.
+    /// Strategies to use for decoding `Date` values from SQLite data.
     ///
-    /// The `DateDecodingStrategy` enum defines different strategies for decoding `Date` values.
-    /// These strategies determine how SQLite data is converted to `Date` objects during the decoding process.
+    /// Use these strategies to specify how `Date` values should be decoded
+    /// from various SQLite-compatible representations. This enum supports
+    /// deferred decoding, standard formats, custom formatters, and epoch timestamps.
     ///
     /// ## Topics
     ///
@@ -27,31 +28,33 @@ extension RowDecoder {
     /// - ``secondsSince1970Int``
     /// - ``secondsSince1970Double``
     public enum DateDecodingStrategy {
-        /// The default strategy. Decodes the date based on the type of SQLite.
+        /// Decode dates by using the implementation of the `SQLiteRawRepresentable` protocol.
         ///
-        /// This strategy attempts to decode the date using the initializer defined
-        /// in the `SQLiteRawRepresentable` protocol, which the Date type conforms to.
-        ///
-        /// Use this strategy when you want to rely on the default conversion
-        /// logic provided by the SQLiteRawRepresentable conformance of Date.
+        /// This strategy relies on the type’s conformance to `SQLiteRawRepresentable`
+        /// to decode the date value from SQLite data.
         case deferredToDate
         
-        /// Decodes the date using a custom `DateFormatter`. Allows for flexible date formats.
+        /// Decode dates using the provided custom formatter.
+        ///
+        /// - Parameter formatter: An object conforming to `DateFormatterProtocol`
+        ///   used to decode the date string.
         case formatted(any DateFormatterProtocol)
         
-        /// Decodes the date as milliseconds since the Unix epoch (`Int`).
+        /// Decode dates from an integer representing milliseconds since 1970.
         case millisecondsSince1970Int
         
-        /// Decodes the date as milliseconds since the Unix epoch (`Double`).
+        /// Decode dates from a double representing milliseconds since 1970.
         case millisecondsSince1970Double
         
-        /// Decodes the date as seconds since the Unix epoch (`Int`).
+        /// Decode dates from an integer representing seconds since 1970.
         case secondsSince1970Int
         
-        /// Decodes the date as seconds since the Unix epoch (`Double`).
+        /// Decode dates from a double representing seconds since 1970.
         case secondsSince1970Double
         
-        /// Decodes the date using the ISO 8601 format (`yyyy-MM-dd'T'HH:mm:ssZ`).
+        /// Decode dates using ISO 8601 format.
+        ///
+        /// This strategy uses `ISO8601DateFormatter` internally.
         public static var iso8601: Self {
             .formatted(ISO8601DateFormatter())
         }
