@@ -603,7 +603,7 @@ private extension UnkeyedContainerTests {
             type.init(sqliteData[key.intValue!].value)!
         }
         
-        func decoder(for key: any CodingKey) -> any Swift.Decoder {
+        func decoder(for key: any CodingKey) -> any Decoder {
             MockValueDecoder(sqliteData: sqliteData[key.intValue!].value)
         }
         

@@ -23,6 +23,12 @@ final class SQLiteRowTests: XCTestCase {
         XCTAssertNil(row[DummyKey(stringValue: "key2")])
         
         XCTAssertEqual(row[DummyKey(intValue: 0)], .text("value"))
+        
+        row[DummyKey(stringValue: "key1")] = .int(42)
+        XCTAssertEqual(row[DummyKey(stringValue: "key1")], .int(42))
+        
+        row[DummyKey(intValue: 0)] = .real(3.14)
+        XCTAssertEqual(row[DummyKey(intValue: 0)], .real(3.14))
     }
 }
 

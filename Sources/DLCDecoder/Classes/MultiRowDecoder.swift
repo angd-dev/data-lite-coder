@@ -52,7 +52,7 @@ public final class MultiRowDecoder: RowDecoder {
         throw DecodingError.typeMismatch(type, context)
     }
     
-    public func decoder(for key: any CodingKey) throws -> any Swift.Decoder {
+    public func decoder(for key: any CodingKey) throws -> any Decoder {
         guard let index = key.intValue else {
             let info = "Expected an integer key, but found a non-integer key."
             let context = DecodingError.Context(

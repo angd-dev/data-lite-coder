@@ -1,23 +1,20 @@
 import Foundation
 import DataLiteCore
+
 private import DLCDecoder
 
-/// Decoder for converting SQLite data into Swift types conforming to the `Decodable` protocol.
+/// Decoder that decodes SQLite values into Swift types conforming to the `Decodable` protocol.
 ///
 /// ## Overview
 ///
-/// `RowDecoder` allows decoding data from SQLite into Swift types that conform to the `Decodable` protocol.
-/// It works with rows and arrays of rows, providing flexibility for various use cases.
+/// Use `RowDecoder` to convert `SQLiteRow` or an array of `SQLiteRow` into Swift types that conform
+/// to the `Decodable` protocol.
 ///
-/// ### Decoding a Row Into an Object
+/// ### Decode a Single Row
 ///
-/// In this example, an SQLite row is decoded into a Swift object (struct or class) conforming to `Decodable`.
-/// This is useful for working with query results that return a single row.
+/// Use ``decode(_:from:)->T`` to decode a single `SQLiteRow` into a `Decodable` value.
 ///
 /// ```swift
-/// import SQLiteCoder
-/// import SQLiteSwift
-///
 /// struct User: Decodable {
 ///     var id: Int
 ///     var name: String
@@ -35,14 +32,12 @@ private import DLCDecoder
 /// }
 /// ```
 ///
-/// ### Decoding a Row Into an Array
+/// ### Decode a Row into an Array
 ///
-/// If an SQLite row contains homogeneous data (e.g., multiple numeric values), it can be decoded into a Swift array.
+/// Use ``decode(_:from:)->T`` to decode a row containing homogeneous values
+/// into an array of Swift values.
 ///
 /// ```swift
-/// import SQLiteCoder
-/// import SQLiteSwift
-///
 /// do {
 ///     var row: SQLiteRow = .init()
 ///     row["a"] = .int(10)
@@ -55,17 +50,18 @@ private import DLCDecoder
 /// }
 /// ```
 ///
-/// ### Decoding an Array of Rows
+/// ### Decode Multiple Rows
 ///
-/// This example shows how to decode an array of SQLite rows into an array of Swift objects.
-/// This is useful when working with query results that return multiple rows.
+/// Use ``decode(_:from:)->[T]`` to decode an array of `SQLiteRow` into an array of `Decodable` values.
 ///
 /// ```swift
-/// import SQLiteCoder
-/// import SQLiteSwift
+/// struct User: Decodable {
+///     var id: Int
+///     var name: String
+/// }
 ///
 /// do {
-///     let rows: [SQLiteRow] = fetchRows() // Example function to fetch rows
+///     let rows: [SQLiteRow] = fetchRows() // Fetch rows from a database
 ///     let decoder = RowDecoder()
 ///     let users = try decoder.decode([User].self, from: rows)
 /// } catch {
@@ -73,21 +69,23 @@ private import DLCDecoder
 /// }
 /// ```
 ///
-/// ### Custom User Info
+/// ### Customize Decoding with User Info
 ///
-/// You can pass additional data via ``userInfo`` to be used during the decoding process.
-/// This can be useful for passing context or settings that influence the decoding process.
+/// Use the ``userInfo`` property to pass context or flags to decoding logic.
 ///
-/// This example demonstrates how to use ``userInfo`` to pass context during decoding:
+/// First, define a custom key:
 ///
 /// ```swift
-/// import SQLiteCoder
-/// import SQLiteSwift
-///
 /// extension CodingUserInfoKey {
-///     static let isAdmin = CodingUserInfoKey(rawValue: "isAdmin")!
+///     static let isAdmin = CodingUserInfoKey(
+///         rawValue: "isAdmin"
+///     )!
 /// }
+/// ```
 ///
+/// Then access it inside your model:
+///
+/// ```swift
 /// struct User: Decodable {
 ///     enum CodingKeys: String, CodingKey {
 ///         case id, name
@@ -102,16 +100,14 @@ private import DLCDecoder
 ///         id = try container.decode(Int.self, forKey: .id)
 ///         name = try container.decode(String.self, forKey: .name)
 ///
-///         // Using userInfo to retrieve additional data
-///         let userInfo = decoder.userInfo
-///         if let isAdmin = userInfo[.isAdmin] as? Bool {
-///             self.isAdmin = isAdmin
-///         } else {
-///             self.isAdmin = false
-///         }
+///         isAdmin = (decoder.userInfo[.isAdmin] as? Bool) ?? false
 ///     }
 /// }
+/// ```
 ///
+/// Pass the value before decoding:
+///
+/// ```swift
 /// do {
 ///     var row: SQLiteRow = .init()
 ///     row["id"] = .int(1)
@@ -128,27 +124,27 @@ private import DLCDecoder
 ///
 /// ### Date Decoding Strategy
 ///
-/// You can change the decoding strategy for `Date` values using the ``dateDecodingStrategy-swift.property`` property.
+/// Use the ``dateDecodingStrategy`` property to customize how `Date` values are decoded.
 ///
 /// ```swift
-/// import SQLiteCoder
-/// import SQLiteSwift
-///
-/// let decoder = RowDecoder()
-/// decoder.dateDecodingStrategy = .secondsSince1970Int
-///
-/// var row: SQLiteRow = .init()
-/// row["timestamp"] = .int(1_700_000_000)
+/// struct Log: Decodable {
+///     let timestamp: Date
+/// }
 ///
 /// do {
-///     let date = try decoder.decode(Date.self, from: row["timestamp"]!)
-///     print("Decoded date:", date)
+///     var row: SQLiteRow = .init()
+///     row["timestamp"] = .int(1_700_000_000)
+///
+///     let decoder = RowDecoder()
+///     decoder.dateDecodingStrategy = .secondsSince1970Int
+///
+///     let log = try decoder.decode(Log.self, from: row)
 /// } catch {
 ///     print("Decoding error:", error)
 /// }
 /// ```
 ///
-/// For more detailed information, see ``DateDecodingStrategy-swift.enum``.
+/// For more detailed information, see ``DateDecodingStrategy``.
 ///
 /// ## Topics
 ///
@@ -158,8 +154,8 @@ private import DLCDecoder
 ///
 /// ### Decoding
 ///
-/// - ``decode(_:from:)-(_,SQLiteRow)``
-/// - ``decode(_:from:)-(_,[SQLiteRow])``
+/// - ``decode(_:from:)->T``
+/// - ``decode(_:from:)->[T]``
 ///
 /// ### Customizing Decoding
 ///
@@ -167,34 +163,31 @@ private import DLCDecoder
 ///
 /// ### Decoding Dates
 ///
-/// - ``dateDecodingStrategy-swift.property``
-/// - ``DateDecodingStrategy-swift.enum``
+/// - ``dateDecodingStrategy``
+/// - ``DateDecodingStrategy``
 public final class RowDecoder {
     // MARK: - Properties
     
-    /// A dictionary containing user-defined information that is available during decoding.
+    /// A dictionary containing user-defined information accessible during decoding.
     ///
-    /// You can use this dictionary to pass additional context or settings that influence the decoding process.
-    /// The values stored in `userInfo` can be accessed inside a custom `Decodable` implementation
-    /// via the `Decoder`'s `userInfo` property.
+    /// This dictionary allows passing additional context or settings that can influence
+    /// the decoding process. Values stored here are accessible inside custom `Decodable`
+    /// implementations through the `Decoder`'s `userInfo` property.
     public var userInfo: [CodingUserInfoKey: Any]
     
-    /// The strategy used for decoding `Date` values from SQLite data.
+    /// The strategy used to decode `Date` values from SQLite data.
     ///
-    /// This property determines how `Date` values are decoded from SQLite storage. Different strategies
-    /// allow handling various date formats, including timestamps and custom formats.
+    /// Determines how `Date` values are decoded from SQLite storage, supporting
+    /// different formats such as timestamps or custom representations.
     public var dateDecodingStrategy: DateDecodingStrategy
     
-    // MARK: - Inits
+    // MARK: - Initialization
     
-    /// Creates a new decoder configuration with optional settings.
-    ///
-    /// This initializer allows customizing the decoder's behavior by providing a `userInfo` dictionary
-    /// and a `dateDecodingStrategy`. If not specified, default values are used.
+    /// Initializes a new `RowDecoder` instance with optional configuration.
     ///
     /// - Parameters:
-    ///   - userInfo: A dictionary containing user-defined information that is available during decoding.
-    ///   - dateDecodingStrategy: The strategy for decoding `Date` values. Defaults to `.deferredToDate`.
+    ///   - userInfo: A dictionary with user-defined information accessible during decoding.
+    ///   - dateDecodingStrategy: The strategy to decode `Date` values. Default is `.deferredToDate`.
     public init(
         userInfo: [CodingUserInfoKey: Any] = [:],
         dateDecodingStrategy: DateDecodingStrategy = .deferredToDate
@@ -203,25 +196,20 @@ public final class RowDecoder {
         self.dateDecodingStrategy = dateDecodingStrategy
     }
     
-    // MARK: - Methods
+    // MARK: - Decoding Methods
     
-    /// Decodes an SQLite row into the specified type.
-    ///
-    /// This method converts an `SQLiteRow` into a Swift type conforming to `Decodable`.
-    /// It is useful for decoding entire rows from an SQLite query result. If decoding fails,
-    /// this method throws the corresponding error.
+    /// Decodes a single `SQLiteRow` into an instance of the specified `Decodable` type.
     ///
     /// - Parameters:
-    ///   - type: The type to decode the row into.
+    ///   - type: The target type conforming to `Decodable`.
     ///   - row: The SQLite row to decode.
-    /// - Returns: A decoded instance of the specified type.
+    /// - Returns: An instance of the specified type decoded from the row.
+    /// - Throws: An error if decoding fails.
     public func decode<T: Decodable>(
         _ type: T.Type,
         from row: SQLiteRow
     ) throws -> T {
-        let dateDecoder = DateDecoder(
-            strategy: dateDecodingStrategy
-        )
+        let dateDecoder = DateDecoder(strategy: dateDecodingStrategy)
         let decoder = SingleRowDecoder(
             dateDecoder: dateDecoder,
             sqliteData: row,
@@ -231,44 +219,35 @@ public final class RowDecoder {
         return try T(from: decoder)
     }
     
-    /// Decodes multiple SQLite rows into the specified type.
-    ///
-    /// This method converts an array of `SQLiteRow` into a Swift type conforming to `Decodable`.
-    /// It is useful for decoding multiple rows from an SQLite query result. If decoding fails,
-    /// this method throws the corresponding error.
+    /// Decodes an array of `SQLiteRow` values into an array of the specified `Decodable` type.
     ///
     /// - Parameters:
-    ///   - type: The type to decode the rows into.
+    ///   - type: The array type containing the element type to decode.
     ///   - rows: The array of SQLite rows to decode.
-    /// - Returns: A decoded instance of the specified type.
+    /// - Returns: An array of decoded instances.
+    /// - Throws: An error if decoding any row fails.
     public func decode<T: Decodable>(
-        _ type: T.Type,
+        _ type: [T].Type,
         from rows: [SQLiteRow]
-    ) throws -> T {
-        let dateDecoder = DateDecoder(
-            strategy: dateDecodingStrategy
-        )
+    ) throws -> [T] {
+        let dateDecoder = DateDecoder(strategy: dateDecodingStrategy)
         let decoder = MultiRowDecoder(
             dateDecoder: dateDecoder,
             sqliteData: rows,
             codingPath: [],
             userInfo: userInfo
         )
-        return try T(from: decoder)
+        return try [T](from: decoder)
     }
 }
 
 #if canImport(Combine)
-    import Combine
-    
-    // MARK: - TopLevelDecoder
-    
-    extension RowDecoder: TopLevelDecoder {
-        /// The input data type for the decoder (an array of SQLite rows).
-        ///
-        /// Conforming to `TopLevelDecoder` allows `RowDecoder` to be used with
-        /// Combine's `decode(_:decoder:)` operator, enabling seamless decoding of
-        /// SQLite query results within reactive pipelines.
-        public typealias Input = [SQLiteRow]
-    }
+import Combine
+
+// MARK: - TopLevelDecoder
+
+extension RowDecoder: TopLevelDecoder {
+    /// The type of input data expected by this decoder when used as a `TopLevelDecoder`.
+    public typealias Input = SQLiteRow
+}
 #endif
