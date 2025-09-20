@@ -15,7 +15,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/angd-dev/data-lite-core.git",
-            revision: "5c6942bd0b9636b5ac3e550453c07aac843e8416"
+            revision: "94df0b7cca50f07d271b9fc08a25cc7ada6a5be5"
         ),
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0")
     ],
