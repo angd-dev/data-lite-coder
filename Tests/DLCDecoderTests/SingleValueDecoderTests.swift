@@ -42,7 +42,7 @@ final class SingleValueDecoderTests: XCTestCase {
             }
             XCTAssertTrue(type == Data.self)
             XCTAssertEqual(context.codingPath as? [DummyKey], decoder.codingPath as? [DummyKey])
-            XCTAssertEqual(context.debugDescription, "Expected to decode Data but found an \(SQLiteRawValue.int(0)) instead.")
+            XCTAssertEqual(context.debugDescription, "Expected to decode Data but found an \(SQLiteValue.int(0)) instead.")
         }
     }
     
@@ -99,7 +99,7 @@ final class SingleValueDecoderTests: XCTestCase {
 private extension SingleValueDecoderTests {
     func decoder(
         dateDecoder: DateDecoder = MockDateDecoder(),
-        sqliteData: SQLiteRawValue,
+        sqliteData: SQLiteValue,
         codingPath: [any CodingKey] = []
     ) -> SingleValueDecoder {
         SingleValueDecoder(

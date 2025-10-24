@@ -11,8 +11,8 @@ final class SingleRowEncoderTests: XCTestCase {
             codingPath: [],
             userInfo: [:]
         )
-        try encoder.set(SQLiteRawValue.int(42), for: CodingKeys.key1)
-        try encoder.set(SQLiteRawValue.real(3.14), for: CodingKeys.key2)
+        try encoder.set(SQLiteValue.int(42), for: CodingKeys.key1)
+        try encoder.set(SQLiteValue.real(3.14), for: CodingKeys.key2)
         XCTAssertEqual(encoder.sqliteData[CodingKeys.key1], .int(42))
         XCTAssertEqual(encoder.sqliteData[CodingKeys.key2], .real(3.14))
         XCTAssertEqual(encoder.count, encoder.sqliteData.count)
@@ -34,7 +34,7 @@ final class SingleRowEncoderTests: XCTestCase {
             }
             XCTAssertEqual(thrownValue as? String, value)
             XCTAssertEqual(context.codingPath as? [CodingKeys], path + [.key2])
-            XCTAssertEqual(context.debugDescription, "The value does not match SQLiteRawValue")
+            XCTAssertEqual(context.debugDescription, "The value does not match SQLiteValue")
         }
     }
     
@@ -61,7 +61,7 @@ final class SingleRowEncoderTests: XCTestCase {
         try encoder.encodeDate(date, for: CodingKeys.key1)
         
         XCTAssertTrue(mockDateEncoder.didCallEncode)
-        XCTAssertEqual(encoder.sqliteData[CodingKeys.key1], date.sqliteRawValue)
+        XCTAssertEqual(encoder.sqliteData[CodingKeys.key1], date.sqliteValue)
         XCTAssertEqual(encoder.count, encoder.sqliteData.count)
     }
     

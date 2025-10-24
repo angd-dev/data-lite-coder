@@ -27,7 +27,7 @@ final class SingleValueContainer<Decoder: ValueDecoder>: Container, SingleValueD
         switch type {
         case is Date.Type:
             try decoder.decodeDate() as! T
-        case let type as SQLiteRawRepresentable.Type:
+        case let type as SQLiteRepresentable.Type:
             try decoder.decode(type) as! T
         default:
             try T(from: decoder)

@@ -138,7 +138,7 @@ final class SingleValueContainerTests: XCTestCase {
 }
 
 private extension SingleValueContainerTests {
-    enum RawRepresentableModel: String, Encodable, SQLiteRawRepresentable {
+    enum RawRepresentableModel: String, Encodable, SQLiteRepresentable {
         case test
     }
     
@@ -159,13 +159,13 @@ private extension SingleValueContainerTests {
     }
     
     final class MockSingleValueEncoder: ValueEncoder {
-        private(set) var sqliteData: SQLiteRawValue?
+        private(set) var sqliteData: SQLiteValue?
         let dateEncoder: any DateEncoder
         let codingPath: [any CodingKey]
         let userInfo: [CodingUserInfoKey: Any]
         
         init(
-            sqliteData: SQLiteRawValue? = nil,
+            sqliteData: SQLiteValue? = nil,
             dateEncoder: any DateEncoder = MockDateEncoder(),
             codingPath: [any CodingKey] = [],
             userInfo: [CodingUserInfoKey: Any] = [:]
@@ -184,8 +184,8 @@ private extension SingleValueContainerTests {
             try dateEncoder.encode(date, to: self)
         }
         
-        func encode<T: SQLiteRawBindable>(_ value: T) throws {
-            sqliteData = value.sqliteRawValue
+        func encode<T: SQLiteBindable>(_ value: T) throws {
+            sqliteData = value.sqliteValue
         }
         
         func container<Key: CodingKey>(

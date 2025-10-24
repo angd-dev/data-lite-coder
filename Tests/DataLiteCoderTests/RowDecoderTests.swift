@@ -23,14 +23,14 @@ final class RowDecoderTests: XCTestCase {
         )
         
         var row = SQLiteRow()
-        row["id"] = model.id.sqliteRawValue
-        row["type"] = model.type.rawValue.sqliteRawValue
-        row["name"] = model.name.sqliteRawValue
-        row["age"] = model.age.sqliteRawValue
-        row["isActive"] = model.isActive.sqliteRawValue
-        row["score"] = model.score.sqliteRawValue
-        row["createdAt"] = model.createdAt.sqliteRawValue
-        row["payload"] = model.payload.sqliteRawValue
+        row["id"] = model.id.sqliteValue
+        row["type"] = model.type.rawValue.sqliteValue
+        row["name"] = model.name.sqliteValue
+        row["age"] = model.age.sqliteValue
+        row["isActive"] = model.isActive.sqliteValue
+        row["score"] = model.score.sqliteValue
+        row["createdAt"] = model.createdAt.sqliteValue
+        row["payload"] = model.payload.sqliteValue
         
         let decoded = try decoder.decode(
             StandardModel.self,
@@ -55,11 +55,11 @@ final class RowDecoderTests: XCTestCase {
         )
         
         var row = SQLiteRow()
-        row["id"] = model.id!.sqliteRawValue
-        row["type"] = model.type!.rawValue.sqliteRawValue
-        row["name"] = model.name!.sqliteRawValue
-        row["createdAt"] = model.createdAt!.sqliteRawValue
-        row["payload"] = model.payload!.sqliteRawValue
+        row["id"] = model.id!.sqliteValue
+        row["type"] = model.type!.rawValue.sqliteValue
+        row["name"] = model.name!.sqliteValue
+        row["createdAt"] = model.createdAt!.sqliteValue
+        row["payload"] = model.payload!.sqliteValue
         
         let decoded = try decoder.decode(
             OptionalModel.self,
@@ -88,9 +88,9 @@ final class RowDecoderTests: XCTestCase {
         ]
         
         var row = SQLiteRow()
-        row["key0"] = dates[0].sqliteRawValue
-        row["key1"] = dates[1].sqliteRawValue
-        row["key2"] = dates[2].sqliteRawValue
+        row["key0"] = dates[0].sqliteValue
+        row["key1"] = dates[1].sqliteValue
+        row["key2"] = dates[2].sqliteValue
         
         let decoded = try decoder.decode([Date].self, from: row)
         
@@ -104,7 +104,7 @@ final class RowDecoderTests: XCTestCase {
         )
         
         var row = SQLiteRow()
-        row["id"] = 1.sqliteRawValue
+        row["id"] = 1.sqliteValue
         
         XCTAssertThrowsError(
             try decoder.decode(SimpleModel.self, from: row)
@@ -122,8 +122,8 @@ final class RowDecoderTests: XCTestCase {
         )
         
         var row = SQLiteRow()
-        row["id"] = "not an int".sqliteRawValue
-        row["name"] = "test".sqliteRawValue
+        row["id"] = "not an int".sqliteValue
+        row["name"] = "test".sqliteValue
         
         XCTAssertThrowsError(
             try decoder.decode(SimpleModel.self, from: row)
@@ -167,14 +167,14 @@ final class RowDecoderTests: XCTestCase {
         
         let rows: [SQLiteRow] = models.map { model in
             var row = SQLiteRow()
-            row["id"] = model.id.sqliteRawValue
-            row["type"] = model.type.rawValue.sqliteRawValue
-            row["name"] = model.name.sqliteRawValue
-            row["age"] = model.age.sqliteRawValue
-            row["isActive"] = model.isActive.sqliteRawValue
-            row["score"] = model.score.sqliteRawValue
-            row["createdAt"] = model.createdAt.sqliteRawValue
-            row["payload"] = model.payload.sqliteRawValue
+            row["id"] = model.id.sqliteValue
+            row["type"] = model.type.rawValue.sqliteValue
+            row["name"] = model.name.sqliteValue
+            row["age"] = model.age.sqliteValue
+            row["isActive"] = model.isActive.sqliteValue
+            row["score"] = model.score.sqliteValue
+            row["createdAt"] = model.createdAt.sqliteValue
+            row["payload"] = model.payload.sqliteValue
             return row
         }
 
@@ -208,11 +208,11 @@ final class RowDecoderTests: XCTestCase {
         
         let rows: [SQLiteRow] = models.map { model in
             var row = SQLiteRow()
-            row["id"] = model.id?.sqliteRawValue
-            row["type"] = model.type?.rawValue.sqliteRawValue
-            row["name"] = model.name?.sqliteRawValue
-            row["createdAt"] = model.createdAt?.sqliteRawValue
-            row["payload"] = model.payload?.sqliteRawValue
+            row["id"] = model.id?.sqliteValue
+            row["type"] = model.type?.rawValue.sqliteValue
+            row["name"] = model.name?.sqliteValue
+            row["createdAt"] = model.createdAt?.sqliteValue
+            row["payload"] = model.payload?.sqliteValue
             return row
         }
 
@@ -242,9 +242,9 @@ final class RowDecoderTests: XCTestCase {
         
         let rows: [SQLiteRow] = dates.map { dates in
             var row = SQLiteRow()
-            row["key0"] = dates[0].sqliteRawValue
-            row["key1"] = dates[1].sqliteRawValue
-            row["key2"] = dates[2].sqliteRawValue
+            row["key0"] = dates[0].sqliteValue
+            row["key1"] = dates[1].sqliteValue
+            row["key2"] = dates[2].sqliteValue
             return row
         }
 
@@ -260,7 +260,7 @@ final class RowDecoderTests: XCTestCase {
         )
         
         var row = SQLiteRow()
-        row["id"] = 1.sqliteRawValue
+        row["id"] = 1.sqliteValue
         
         XCTAssertThrowsError(
             try decoder.decode([SimpleModel].self, from: [row])
@@ -278,8 +278,8 @@ final class RowDecoderTests: XCTestCase {
         )
         
         var row = SQLiteRow()
-        row["id"] = "not an int".sqliteRawValue
-        row["name"] = "test".sqliteRawValue
+        row["id"] = "not an int".sqliteValue
+        row["name"] = "test".sqliteValue
         
         XCTAssertThrowsError(
             try decoder.decode([SimpleModel].self, from: [row])

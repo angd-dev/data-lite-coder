@@ -292,7 +292,7 @@ private extension KeyedContainerTests {
         case key3
     }
     
-    enum RawRepresentableEnum: String, Decodable, SQLiteRawRepresentable {
+    enum RawRepresentableEnum: String, Decodable, SQLiteRepresentable {
         case test
     }
     
@@ -351,7 +351,7 @@ private extension KeyedContainerTests {
             try dateDecoder.decode(from: self, for: key)
         }
         
-        func decode<T: SQLiteRawRepresentable>(
+        func decode<T: SQLiteRepresentable>(
             _ type: T.Type,
             for key: any CodingKey
         ) throws -> T {
@@ -378,7 +378,7 @@ private extension KeyedContainerTests {
     }
     
     final class MockValueDecoder: ValueDecoder, SingleValueDecodingContainer {
-        typealias SQLiteData = SQLiteRawValue
+        typealias SQLiteData = SQLiteValue
         
         let sqliteData: SQLiteData
         var dateDecoder: DateDecoder
@@ -405,7 +405,7 @@ private extension KeyedContainerTests {
             fatalError()
         }
         
-        func decode<T: SQLiteRawRepresentable>(
+        func decode<T: SQLiteRepresentable>(
             _ type: T.Type
         ) throws -> T {
             fatalError()

@@ -488,7 +488,7 @@ final class UnkeyedContainerTests: XCTestCase {
 
 private extension UnkeyedContainerTests {
     func container(
-        withData data: SQLiteRawValue,
+        withData data: SQLiteValue,
         codingPath: [any CodingKey] = []
     ) -> UnkeyedContainer<MockKeyedDecoder> {
         var row = SQLiteRow()
@@ -535,7 +535,7 @@ private extension UnkeyedContainerTests {
 }
 
 private extension UnkeyedContainerTests {
-    enum RawRepresentableEnum: String, Decodable, SQLiteRawRepresentable {
+    enum RawRepresentableEnum: String, Decodable, SQLiteRepresentable {
         case test
     }
     
@@ -596,7 +596,7 @@ private extension UnkeyedContainerTests {
             try dateDecoder.decode(from: self, for: key)
         }
         
-        func decode<T: SQLiteRawRepresentable>(
+        func decode<T: SQLiteRepresentable>(
             _ type: T.Type,
             for key: any CodingKey
         ) throws -> T {
@@ -623,7 +623,7 @@ private extension UnkeyedContainerTests {
     }
     
     final class MockValueDecoder: ValueDecoder, SingleValueDecodingContainer {
-        typealias SQLiteData = SQLiteRawValue
+        typealias SQLiteData = SQLiteValue
         
         let sqliteData: SQLiteData
         var dateDecoder: DateDecoder
@@ -650,7 +650,7 @@ private extension UnkeyedContainerTests {
             fatalError()
         }
         
-        func decode<T: SQLiteRawRepresentable>(
+        func decode<T: SQLiteRepresentable>(
             _ type: T.Type
         ) throws -> T {
             fatalError()

@@ -49,7 +49,7 @@ public final class SingleRowDecoder: RowDecoder, KeyCheckingDecoder {
         try dateDecoder.decode(from: self, for: key)
     }
     
-    public func decode<T: SQLiteRawRepresentable>(
+    public func decode<T: SQLiteRepresentable>(
         _ type: T.Type,
         for key: any CodingKey
     ) throws -> T {

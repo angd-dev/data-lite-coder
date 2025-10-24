@@ -27,7 +27,7 @@ final class SingleValueContainer<Encoder: ValueEncoder>: Container, SingleValueE
         switch value {
         case let value as Date:
             try encoder.encodeDate(value)
-        case let value as SQLiteRawBindable:
+        case let value as SQLiteBindable:
             try encoder.encode(value)
         default:
             try value.encode(to: encoder)

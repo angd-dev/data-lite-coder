@@ -153,7 +153,7 @@ final class SingleValueContainerTests: XCTestCase {
 }
 
 private extension SingleValueContainerTests {
-    enum RawRepresentableEnum: String, Decodable, SQLiteRawRepresentable {
+    enum RawRepresentableEnum: String, Decodable, SQLiteRepresentable {
         case test
     }
     
@@ -177,13 +177,13 @@ private extension SingleValueContainerTests {
     }
     
     final class MockSingleValueDecoder: ValueDecoder, SingleValueDecodingContainer {
-        let sqliteData: SQLiteRawValue
+        let sqliteData: SQLiteValue
         let dateDecoder: DateDecoder
         let codingPath: [any CodingKey]
         let userInfo: [CodingUserInfoKey: Any]
         
         init(
-            sqliteData: SQLiteRawValue,
+            sqliteData: SQLiteValue,
             dateDecoder: DateDecoder = MockDateDecoder(),
             codingPath: [any CodingKey] = [],
             userInfo: [CodingUserInfoKey: Any] = [:]
@@ -202,7 +202,7 @@ private extension SingleValueContainerTests {
             try dateDecoder.decode(from: self)
         }
         
-        func decode<T: SQLiteRawRepresentable>(
+        func decode<T: SQLiteRepresentable>(
             _ type: T.Type
         ) throws -> T {
             type.init(sqliteData)!
