@@ -29,8 +29,8 @@ public final class SingleRowEncoder: RowEncoder {
     // MARK: - Methods
     
     public func set(_ value: Any, for key: any CodingKey) throws {
-        guard let value = value as? SQLiteRawValue else {
-            let info = "The value does not match \(SQLiteRawValue.self)"
+        guard let value = value as? SQLiteValue else {
+            let info = "The value does not match \(SQLiteValue.self)"
             let context = EncodingError.Context(
                 codingPath: codingPath + [key],
                 debugDescription: info
@@ -48,8 +48,8 @@ public final class SingleRowEncoder: RowEncoder {
         try dateEncoder.encode(date, for: key, to: self)
     }
     
-    public func encode<T: SQLiteRawBindable>(_ value: T, for key: any CodingKey) throws {
-        sqliteData[key] = value.sqliteRawValue
+    public func encode<T: SQLiteBindable>(_ value: T, for key: any CodingKey) throws {
+        sqliteData[key] = value.sqliteValue
     }
     
     public func encoder(for key: any CodingKey) throws -> any Encoder {

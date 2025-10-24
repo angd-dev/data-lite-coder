@@ -5,7 +5,7 @@ final class SingleValueDecoder: ValueDecoder {
     // MARK: - Properties
     
     let dateDecoder: any DateDecoder
-    let sqliteData: SQLiteRawValue
+    let sqliteData: SQLiteValue
     let codingPath: [any CodingKey]
     let userInfo: [CodingUserInfoKey: Any]
     
@@ -13,7 +13,7 @@ final class SingleValueDecoder: ValueDecoder {
     
     init(
         dateDecoder: any DateDecoder,
-        sqliteData: SQLiteRawValue,
+        sqliteData: SQLiteValue,
         codingPath: [any CodingKey],
         userInfo: [CodingUserInfoKey: Any]
     ) {
@@ -33,7 +33,7 @@ final class SingleValueDecoder: ValueDecoder {
         try dateDecoder.decode(from: self)
     }
     
-    func decode<T: SQLiteRawRepresentable>(_ type: T.Type) throws -> T {
+    func decode<T: SQLiteRepresentable>(_ type: T.Type) throws -> T {
         guard sqliteData != .null else {
             let info = "Cannot get value of type \(T.self), found null value instead."
             let context = DecodingError.Context(

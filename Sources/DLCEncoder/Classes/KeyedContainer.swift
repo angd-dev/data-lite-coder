@@ -29,7 +29,7 @@ final class KeyedContainer<Encoder: RowEncoder, Key: CodingKey>: Container, Keye
         switch value {
         case let value as Date:
             try encoder.encodeDate(value, for: key)
-        case let value as SQLiteRawBindable:
+        case let value as SQLiteBindable:
             try encoder.encode(value, for: key)
         default:
             let valueEncoder = try encoder.encoder(for: key)

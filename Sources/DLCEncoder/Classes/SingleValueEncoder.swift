@@ -10,7 +10,7 @@ final class SingleValueEncoder: ValueEncoder {
     let codingPath: [any CodingKey]
     let userInfo: [CodingUserInfoKey: Any]
     
-    private(set) var sqliteData: SQLiteRawValue?
+    private(set) var sqliteData: SQLiteValue?
     
     // MARK: - Inits
     
@@ -34,8 +34,8 @@ final class SingleValueEncoder: ValueEncoder {
         try dateEncoder.encode(date, to: self)
     }
     
-    func encode<T: SQLiteRawBindable>(_ value: T) throws {
-        sqliteData = value.sqliteRawValue
+    func encode<T: SQLiteBindable>(_ value: T) throws {
+        sqliteData = value.sqliteValue
     }
     
     func container<Key: CodingKey>(

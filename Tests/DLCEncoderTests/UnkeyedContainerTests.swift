@@ -145,7 +145,7 @@ private extension UnkeyedContainerTests {
             fatalError()
         }
         
-        func encode<T: SQLiteRawBindable>(_ value: T, for key: any CodingKey) throws {
+        func encode<T: SQLiteBindable>(_ value: T, for key: any CodingKey) throws {
             fatalError()
         }
         
@@ -188,7 +188,7 @@ private extension UnkeyedContainerTests {
         }
         
         func set(_ value: Any, for key: any CodingKey) throws {
-            guard let value = value as? SQLiteRawValue else {
+            guard let value = value as? SQLiteValue else {
                 fatalError()
             }
             sqliteData[key.stringValue] = value
@@ -202,8 +202,8 @@ private extension UnkeyedContainerTests {
             try dateEncoder.encode(date, for: key, to: self)
         }
         
-        func encode<T: SQLiteRawBindable>(_ value: T, for key: any CodingKey) throws {
-            sqliteData[key.stringValue] = value.sqliteRawValue
+        func encode<T: SQLiteBindable>(_ value: T, for key: any CodingKey) throws {
+            sqliteData[key.stringValue] = value.sqliteValue
         }
         
         func encoder(for key: any CodingKey) throws -> any Encoder {
@@ -254,7 +254,7 @@ private extension UnkeyedContainerTests {
             switch value {
             case let value as Date:
                 try encoder.encodeDate(value, for: key)
-            case let value as SQLiteRawRepresentable:
+            case let value as SQLiteRepresentable:
                 try encoder.encode(value, for: key)
             default:
                 let valueEncoder = try encoder.encoder(for: key)

@@ -31,7 +31,7 @@ extension RowEncoder {
             try encoder.encode(value, for: key)
         }
         
-        private func encodeValue(from date: Date) -> SQLiteRawBindable {
+        private func encodeValue(from date: Date) -> SQLiteBindable {
             switch strategy {
             case .deferredToDate:
                 date

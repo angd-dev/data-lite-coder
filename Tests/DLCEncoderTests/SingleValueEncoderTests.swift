@@ -24,7 +24,7 @@ final class SingleValueEncoderTests: XCTestCase {
             userInfo: [:]
         )
         try encoder.encodeDate(date)
-        XCTAssertEqual(encoder.sqliteData, date.sqliteRawValue)
+        XCTAssertEqual(encoder.sqliteData, date.sqliteValue)
         XCTAssertTrue(dateEncoder.didCallEncode)
     }
     

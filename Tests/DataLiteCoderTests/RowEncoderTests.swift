@@ -31,7 +31,7 @@ final class RowEncoderTests: XCTestCase {
         XCTAssertEqual(row["age"], .int(34))
         XCTAssertEqual(row["isActive"], .int(1))
         XCTAssertEqual(row["score"], .real(3.1415))
-        XCTAssertEqual(row["createdAt"], createdAt.sqliteRawValue)
+        XCTAssertEqual(row["createdAt"], createdAt.sqliteValue)
         XCTAssertEqual(row["payload"], .blob(payload))
     }
     
@@ -55,7 +55,7 @@ final class RowEncoderTests: XCTestCase {
         XCTAssertEqual(row["id"], .int(123456))
         XCTAssertEqual(row["type"], .text("multiple"))
         XCTAssertEqual(row["name"], .text("Jane Doe"))
-        XCTAssertEqual(row["createdAt"], createdAt.sqliteRawValue)
+        XCTAssertEqual(row["createdAt"], createdAt.sqliteValue)
         XCTAssertEqual(row["payload"], .blob(payload))
     }
     
@@ -116,7 +116,7 @@ final class RowEncoderTests: XCTestCase {
         XCTAssertEqual(rows[0]["age"], .int(34))
         XCTAssertEqual(rows[0]["isActive"], .int(1))
         XCTAssertEqual(rows[0]["score"], .real(3.1415))
-        XCTAssertEqual(rows[0]["createdAt"], createdAt.sqliteRawValue)
+        XCTAssertEqual(rows[0]["createdAt"], createdAt.sqliteValue)
         XCTAssertEqual(rows[0]["payload"], .blob(payload))
         
         XCTAssertEqual(rows[1]["id"], .int(456))
@@ -125,7 +125,7 @@ final class RowEncoderTests: XCTestCase {
         XCTAssertEqual(rows[1]["age"], .int(28))
         XCTAssertEqual(rows[1]["isActive"], .int(0))
         XCTAssertEqual(rows[1]["score"], .real(2.7182))
-        XCTAssertEqual(rows[1]["createdAt"], createdAt.sqliteRawValue)
+        XCTAssertEqual(rows[1]["createdAt"], createdAt.sqliteValue)
         XCTAssertEqual(rows[1]["payload"], .blob(payload))
     }
     
@@ -162,7 +162,7 @@ final class RowEncoderTests: XCTestCase {
         XCTAssertEqual(rows[0]["id"], .int(123))
         XCTAssertEqual(rows[0]["type"], .text("multiple"))
         XCTAssertEqual(rows[0]["name"], .text("Jane Doe"))
-        XCTAssertEqual(rows[0]["createdAt"], createdAt.sqliteRawValue)
+        XCTAssertEqual(rows[0]["createdAt"], createdAt.sqliteValue)
         XCTAssertEqual(rows[0]["payload"], .blob(payload))
         
         XCTAssertEqual(rows[1]["id"], .null)

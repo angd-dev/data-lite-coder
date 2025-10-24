@@ -102,7 +102,7 @@ final class SingleRowDecoderTests: XCTestCase {
             }
             XCTAssertTrue(type == Data.self)
             XCTAssertEqual(context.codingPath as? [DummyKey], path + [testKey])
-            XCTAssertEqual(context.debugDescription, "Expected to decode Data but found an \(SQLiteRawValue.int(0)) instead.")
+            XCTAssertEqual(context.debugDescription, "Expected to decode Data but found an \(SQLiteValue.int(0)) instead.")
         }
     }
     

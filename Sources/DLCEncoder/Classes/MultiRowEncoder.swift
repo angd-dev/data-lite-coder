@@ -59,7 +59,7 @@ public final class MultiRowEncoder: RowEncoder {
         throw EncodingError.invalidValue(date, context)
     }
     
-    public func encode<T: SQLiteRawBindable>(_ value: T, for key: any CodingKey) throws {
+    public func encode<T: SQLiteBindable>(_ value: T, for key: any CodingKey) throws {
         let info = "Attempted to encode \(T.self), but it's not supported."
         let context = EncodingError.Context(
             codingPath: codingPath + [key],

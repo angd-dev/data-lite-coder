@@ -34,7 +34,7 @@ final class KeyedContainer<Decoder: RowDecoder & KeyCheckingDecoder, Key: Coding
         switch type {
         case is Date.Type:
             try decoder.decodeDate(for: key) as! T
-        case let type as SQLiteRawRepresentable.Type:
+        case let type as SQLiteRepresentable.Type:
             try decoder.decode(type, for: key) as! T
         default:
             try T(from: decoder.decoder(for: key))

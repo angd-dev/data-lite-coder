@@ -17,8 +17,8 @@ final class DateEncoderTests: XCTestCase {
         try dateEncoder.encode(date, to: singleEncoder)
         try dateEncoder.encode(date, for: key, to: keyedEncoder)
         
-        XCTAssertEqual(singleEncoder.sqliteData, date.sqliteRawValue)
-        XCTAssertEqual(keyedEncoder.sqliteData[key], date.sqliteRawValue)
+        XCTAssertEqual(singleEncoder.sqliteData, date.sqliteValue)
+        XCTAssertEqual(keyedEncoder.sqliteData[key], date.sqliteValue)
     }
     
     func testISO8601() throws {
@@ -127,7 +127,7 @@ private extension DateEncoderTests {
         let codingPath: [any CodingKey]
         let userInfo: [CodingUserInfoKey : Any]
         
-        private(set) var sqliteData: SQLiteRawValue?
+        private(set) var sqliteData: SQLiteValue?
         
         init(
             dateEncoder: any DateEncoder,
@@ -147,8 +147,8 @@ private extension DateEncoderTests {
             fatalError()
         }
         
-        func encode<T: SQLiteRawBindable>(_ value: T) throws {
-            sqliteData = value.sqliteRawValue
+        func encode<T: SQLiteBindable>(_ value: T) throws {
+            sqliteData = value.sqliteValue
         }
         
         func container<Key: CodingKey>(
@@ -197,8 +197,8 @@ private extension DateEncoderTests {
             fatalError()
         }
         
-        func encode<T: SQLiteRawBindable>(_ value: T, for key: any CodingKey) throws {
-            sqliteData[key] = value.sqliteRawValue
+        func encode<T: SQLiteBindable>(_ value: T, for key: any CodingKey) throws {
+            sqliteData[key] = value.sqliteValue
         }
         
         func encoder(for key: any CodingKey) throws -> any Encoder {

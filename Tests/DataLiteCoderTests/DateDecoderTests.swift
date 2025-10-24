@@ -137,13 +137,13 @@ private extension DateDecoderTests {
     }
     
     final class SingleValueDecoder: DLCDecoder.ValueDecoder {
-        let sqliteData: SQLiteRawValue
+        let sqliteData: SQLiteValue
         let dateDecoder: DLCDecoder.DateDecoder
         let codingPath: [any CodingKey]
         let userInfo: [CodingUserInfoKey: Any]
         
         init(
-            sqliteData: SQLiteRawValue,
+            sqliteData: SQLiteValue,
             dateDecoder: DLCDecoder.DateDecoder = RowDecoder.DateDecoder(strategy: .deferredToDate),
             codingPath: [any CodingKey] = [],
             userInfo: [CodingUserInfoKey: Any] = [:]
@@ -162,7 +162,7 @@ private extension DateDecoderTests {
             fatalError()
         }
         
-        func decode<T: SQLiteRawRepresentable>(_ type: T.Type) throws -> T {
+        func decode<T: SQLiteRepresentable>(_ type: T.Type) throws -> T {
             type.init(sqliteData)!
         }
         
@@ -213,7 +213,7 @@ private extension DateDecoderTests {
             fatalError()
         }
         
-        func decode<T: SQLiteRawRepresentable>(
+        func decode<T: SQLiteRepresentable>(
             _ type: T.Type,
             for key: any CodingKey
         ) throws -> T {

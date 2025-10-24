@@ -52,7 +52,7 @@ final class UnkeyedContainer<Decoder: RowDecoder>: Container, UnkeyedDecodingCon
         switch type {
         case is Date.Type:
             return try decoder.decodeDate(for: currentKey) as! T
-        case let type as SQLiteRawRepresentable.Type:
+        case let type as SQLiteRepresentable.Type:
             return try decoder.decode(type, for: currentKey) as! T
         default:
             return try T(from: decoder.decoder(for: currentKey))

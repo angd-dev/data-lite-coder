@@ -28,9 +28,9 @@ extension RowDecoder {
     /// - ``secondsSince1970Int``
     /// - ``secondsSince1970Double``
     public enum DateDecodingStrategy {
-        /// Decode dates by using the implementation of the `SQLiteRawRepresentable` protocol.
+        /// Decode dates by using the implementation of the `SQLiteRepresentable` protocol.
         ///
-        /// This strategy relies on the type’s conformance to `SQLiteRawRepresentable`
+        /// This strategy relies on the type’s conformance to `SQLiteRepresentable`
         /// to decode the date value from SQLite data.
         case deferredToDate
         

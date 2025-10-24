@@ -353,7 +353,7 @@ private extension KeyedContainerTests {
         case key3
     }
     
-    enum RawRepresentableModel: String, Encodable, SQLiteRawRepresentable {
+    enum RawRepresentableModel: String, Encodable, SQLiteRepresentable {
         case test
     }
     
@@ -393,7 +393,7 @@ private extension KeyedContainerTests {
         }
         
         func set(_ value: Any, for key: any CodingKey) throws {
-            guard let value = value as? SQLiteRawValue else {
+            guard let value = value as? SQLiteValue else {
                 fatalError()
             }
             sqliteData[key.stringValue] = value
@@ -407,8 +407,8 @@ private extension KeyedContainerTests {
             try dateEncoder.encode(date, for: key, to: self)
         }
         
-        func encode<T: SQLiteRawBindable>(_ value: T, for key: any CodingKey) throws {
-            sqliteData[key.stringValue] = value.sqliteRawValue
+        func encode<T: SQLiteBindable>(_ value: T, for key: any CodingKey) throws {
+            sqliteData[key.stringValue] = value.sqliteValue
         }
         
         func encoder(for key: any CodingKey) throws -> any Encoder {
@@ -431,13 +431,13 @@ private extension KeyedContainerTests {
     }
     
     final class MockSingleValueEncoder: ValueEncoder {
-        private(set) var sqliteData: SQLiteRawValue?
+        private(set) var sqliteData: SQLiteValue?
         let dateEncoder: any DateEncoder
         let codingPath: [any CodingKey]
         let userInfo: [CodingUserInfoKey: Any]
         
         init(
-            sqliteData: SQLiteRawValue? = nil,
+            sqliteData: SQLiteValue? = nil,
             dateEncoder: any DateEncoder = MockDateEncoder(),
             codingPath: [any CodingKey] = [],
             userInfo: [CodingUserInfoKey: Any] = [:]
@@ -456,8 +456,8 @@ private extension KeyedContainerTests {
             try dateEncoder.encode(date, to: self)
         }
         
-        func encode<T: SQLiteRawBindable>(_ value: T) throws {
-            sqliteData = value.sqliteRawValue
+        func encode<T: SQLiteBindable>(_ value: T) throws {
+            sqliteData = value.sqliteValue
         }
         
         func container<Key: CodingKey>(
@@ -495,7 +495,7 @@ private extension KeyedContainerTests {
             switch value {
             case let value as Date:
                 try encoder.encodeDate(value)
-            case let value as SQLiteRawRepresentable:
+            case let value as SQLiteRepresentable:
                 try encoder.encode(value)
             default:
                 try value.encode(to: encoder)
