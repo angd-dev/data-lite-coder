@@ -13,10 +13,7 @@ let package = Package(
         .library(name: "DataLiteCoder", targets: ["DataLiteCoder"])
     ],
     dependencies: [
-        .package(
-            url: "https://github.com/angd-dev/data-lite-core.git",
-            revision: "2b3ba846b06f865616787edfdb47f503317a0dc0"
-        ),
+        .package(url: "https://github.com/angd-dev/data-lite-core.git", from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0")
     ],
     targets: [
