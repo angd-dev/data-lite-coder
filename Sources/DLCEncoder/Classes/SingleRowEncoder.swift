@@ -3,20 +3,20 @@ import DataLiteCore
 
 private import DLCCommon
 
-public final class SingleRowEncoder: RowEncoder {
+package final class SingleRowEncoder: RowEncoder {
     // MARK: - Properties
     
-    public let dateEncoder: any DateEncoder
-    public let codingPath: [any CodingKey]
-    public let userInfo: [CodingUserInfoKey : Any]
+    package let dateEncoder: any DateEncoder
+    package let codingPath: [any CodingKey]
+    package let userInfo: [CodingUserInfoKey : Any]
     
-    public private(set) var sqliteData = SQLiteRow()
+    package private(set) var sqliteData = SQLiteRow()
     
-    public var count: Int { sqliteData.count }
+    package var count: Int { sqliteData.count }
     
     // MARK: - Inits
     
-    public init(
+    package init(
         dateEncoder: any DateEncoder,
         codingPath: [any CodingKey],
         userInfo: [CodingUserInfoKey : Any],
@@ -28,7 +28,7 @@ public final class SingleRowEncoder: RowEncoder {
     
     // MARK: - Methods
     
-    public func set(_ value: Any, for key: any CodingKey) throws {
+    package func set(_ value: Any, for key: any CodingKey) throws {
         guard let value = value as? SQLiteValue else {
             let info = "The value does not match \(SQLiteValue.self)"
             let context = EncodingError.Context(
@@ -40,19 +40,19 @@ public final class SingleRowEncoder: RowEncoder {
         sqliteData[key] = value
     }
     
-    public func encodeNil(for key: any CodingKey) throws {
+    package func encodeNil(for key: any CodingKey) throws {
         sqliteData[key] = .null
     }
     
-    public func encodeDate(_ date: Date, for key: any CodingKey) throws {
+    package func encodeDate(_ date: Date, for key: any CodingKey) throws {
         try dateEncoder.encode(date, for: key, to: self)
     }
     
-    public func encode<T: SQLiteBindable>(_ value: T, for key: any CodingKey) throws {
+    package func encode<T: SQLiteBindable>(_ value: T, for key: any CodingKey) throws {
         sqliteData[key] = value.sqliteValue
     }
     
-    public func encoder(for key: any CodingKey) throws -> any Encoder {
+    package func encoder(for key: any CodingKey) throws -> any Encoder {
         SingleValueEncoder(
             dateEncoder: dateEncoder,
             codingPath: codingPath + [key],
@@ -60,7 +60,7 @@ public final class SingleRowEncoder: RowEncoder {
         )
     }
     
-    public func container<Key: CodingKey>(
+    package func container<Key: CodingKey>(
         keyedBy type: Key.Type
     ) -> KeyedEncodingContainer<Key> {
         let container = KeyedContainer<SingleRowEncoder, Key>(
@@ -69,11 +69,11 @@ public final class SingleRowEncoder: RowEncoder {
         return KeyedEncodingContainer(container)
     }
     
-    public func unkeyedContainer() -> any UnkeyedEncodingContainer {
+    package func unkeyedContainer() -> any UnkeyedEncodingContainer {
         FailedEncodingContainer<RowCodingKey>(codingPath: codingPath)
     }
     
-    public func singleValueContainer() -> any SingleValueEncodingContainer {
+    package func singleValueContainer() -> any SingleValueEncodingContainer {
         FailedEncodingContainer<RowCodingKey>(codingPath: codingPath)
     }
 }

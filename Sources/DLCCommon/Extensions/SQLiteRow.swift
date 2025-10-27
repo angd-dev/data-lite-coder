@@ -1,7 +1,7 @@
 import Foundation
 import DataLiteCore
 
-public extension SQLiteRow {
+package extension SQLiteRow {
     func contains(_ key: CodingKey) -> Bool {
         if let index = key.intValue {
             0..<count ~= index

@@ -1,7 +1,7 @@
 import Foundation
 import DataLiteCore
 
-public protocol RowDecoder: Decoder {
+package protocol RowDecoder: Decoder {
     var count: Int? { get }
     
     func decodeNil(for key: CodingKey) throws -> Bool
